@@ -1,34 +1,40 @@
 package com.adtech.adstockbe.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
+/*@Entity(name = "adstock_historical_data")
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })*/
 public class HistoricalData {
 
-    @Column
+    /*@Id
+    @Column(unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long upstoxResId;
 
-    @Column
+    //@Column
     private Long timestamp;
 
-    @Column
+    //@Column
     private String time;
 
-    @Column
+    //@Column
     private BigDecimal openPrice;
 
-    @Column
+    //@Column
     private BigDecimal highPrice;
 
-    @Column
+    //@Column
     private BigDecimal lowPrice;
 
-    @Column
+    //@Column
     private BigDecimal closePrice;
 
-    @Column
+    //@Column
     private Integer volume;
 
     public Long getTimestamp() {

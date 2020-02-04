@@ -25,7 +25,7 @@ public class Stock {
     @Column
     private String details;
 
-    @Column
+    @Transient
     private List<HistoricalData> historicalDataList;
 
     public Long getStockId() {
