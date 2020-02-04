@@ -17,14 +17,32 @@ public class Stock {
     private Long stockId;
 
     @Column
+    private String stockSymbol;
+
+    @Column
     private String stockName;
 
     @Column
     private String details;
 
     @Column
-    private List<UpstoxRes> upstoxResList;
+    private List<HistoricalData> historicalDataList;
 
+    public Long getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
+    }
+
+    public String getStockSymbol() {
+        return stockSymbol;
+    }
+
+    public void setStockSymbol(String stockSymbol) {
+        this.stockSymbol = stockSymbol;
+    }
 
     public String getStockName() {
         return stockName;
@@ -42,11 +60,11 @@ public class Stock {
         this.details = details;
     }
 
-    public List<UpstoxRes> getUpstoxResList() {
-        return upstoxResList;
+    public List<HistoricalData> getHistoricalDataList() {
+        return historicalDataList;
     }
 
-    public void setUpstoxResList(List<UpstoxRes> upstoxResList) {
-        this.upstoxResList = upstoxResList;
+    public void setHistoricalDataList(List<HistoricalData> historicalDataList) {
+        this.historicalDataList = historicalDataList;
     }
 }

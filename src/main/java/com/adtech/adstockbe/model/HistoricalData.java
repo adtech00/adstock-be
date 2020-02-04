@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 @Entity
-public class UpstoxRes {
+public class HistoricalData {
 
     @Column
     private Long upstoxResId;

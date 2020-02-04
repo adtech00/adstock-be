@@ -1,4 +1,4 @@
-package com.adtech.adstockbe.model;
+package com.adtech.adstockbe.model.Response;
 
 import java.util.List;
 

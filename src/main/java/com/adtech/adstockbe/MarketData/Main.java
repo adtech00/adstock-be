@@ -1,8 +1,8 @@
 package com.adtech.adstockbe.MarketData;
 
 import com.adtech.adstockbe.model.Stock;
-import com.adtech.adstockbe.model.UpstoxRes;
-import com.adtech.adstockbe.service.FetchData;
+import com.adtech.adstockbe.model.HistoricalData;
+import com.adtech.adstockbe.service.externalapis.UpstoxDataService;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -29,33 +29,27 @@ public class Main {
                 String timeInterval=duration;
                 String timestamp = time==0 ? "" : String.valueOf(time);
 
-                FetchData fetchData=new FetchData();
-                List<String> stringList=fetchData.fetchData(sName,timeInterval, timestamp);
+                UpstoxDataService upstoxDataService =new UpstoxDataService();
+                List<String> stringList= upstoxDataService.fetchHistoricalData(sName,timeInterval, timestamp);
 
-                List<UpstoxRes> upstoxResList=new ArrayList<>();
+                List<HistoricalData> historicalDataList =new ArrayList<>();
                 stringList.forEach(x->{
-                    UpstoxRes upstoxRes=new UpstoxRes();
-                    upstoxRes.setTimestamp(Long.valueOf(x.split(",")[0].trim()));
-                    upstoxRes.setTime(new Timestamp(Long.valueOf(x.split(",")[0].trim())).toString());
-                    upstoxRes.setOpenPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[1].trim())));
-                    upstoxRes.setHighPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[2].trim())));
-                    upstoxRes.setLowPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[3].trim())));
-                    upstoxRes.setClosePrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[4].trim())));
-                    upstoxRes.setVolume(Integer.valueOf(x.split(",")[5].replace(".0","").trim()));
+                    HistoricalData historicalData =new HistoricalData();
+                    historicalData.setTimestamp(Long.valueOf(x.split(",")[0].trim()));
+                    historicalData.setTime(new Timestamp(Long.valueOf(x.split(",")[0].trim())).toString());
+                    historicalData.setOpenPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[1].trim())));
+                    historicalData.setHighPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[2].trim())));
+                    historicalData.setLowPrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[3].trim())));
+                    historicalData.setClosePrice(BigDecimal.valueOf(Double.parseDouble(x.split(",")[4].trim())));
+                    historicalData.setVolume(Integer.valueOf(x.split(",")[5].replace(".0","").trim()));
 
-                    upstoxResList.add(upstoxRes);
+                    historicalDataList.add(historicalData);
                 });
 
                 Stock stock=new Stock();
                 stock.setStockName(sName);
                 stock.setDetails("Is a Company");
-                stock.setUpstoxResList(upstoxResList);
-
-            /*
-            stock.getUpstoxResList().forEach(x->{
-                System.out.println(x.getTime()+"=>>>  "+x.getOpenPrice()+"       Vol: "+x.getVolume());
-            });
-            */
+                stock.setHistoricalDataList(historicalDataList);
 
                 stockList.add(stock);
             }
