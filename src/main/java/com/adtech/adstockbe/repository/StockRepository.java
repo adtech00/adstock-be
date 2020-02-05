@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Serializable> {
-    public Stock findById(Long id);
+    public Stock findByStockId(Long id);
 
     public Stock findByStockSymbol(String symbol);
 
