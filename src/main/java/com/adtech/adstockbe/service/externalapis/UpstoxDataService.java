@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -27,16 +28,19 @@ public class UpstoxDataService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    private Environment env;
 
-    public List<String> fetchHistoricalData(String sName, String timeInterval, String timestamp) {
+
+    public List<String> fetchHistoricalData(String stockSymbol, String timeInterval, String timestamp) {
         String apiUrl = "https://api.upstox.com/historical/NSE_EQ/"
-                +sName
+                +stockSymbol
                 +"/"+timeInterval
                 +"?timestamp="+timestamp;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.ALL));
-        headers.add("Authorization","Bearer 1f6c295fa47bb2da640a46978e1ba5b30caa4d1d5bf5ae71de1a35f10b970d50");
+        headers.add("Authorization", env.getProperty("access.token"));
         HttpEntity httpEntity = new HttpEntity(headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, httpEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();
@@ -62,7 +66,7 @@ public class UpstoxDataService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.ALL));
-        headers.add("Authorization","Bearer 1f6c295fa47bb2da640a46978e1ba5b30caa4d1d5bf5ae71de1a35f10b970d50");
+        headers.add("Authorization",env.getProperty("access.token"));
         HttpEntity httpEntity = new HttpEntity(headers);
         ResponseEntity<String> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, httpEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();

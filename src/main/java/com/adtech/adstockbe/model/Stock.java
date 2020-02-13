@@ -16,10 +16,10 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stockId;
 
-    @Column
+    @Column(unique = true)
     private String stockSymbol;
 
-    @Column
+    @Column(unique = true)
     private String stockName;
 
     @Column
